@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+    <style>
+        table, td, th{
+            border: 1px solid blue;
+        };
+        th {
+            font-weight: bolder;
+        };
+        td, th{
+            padding: 8px;
+        };
+    </style>
+</head>
+<body>
+    <h1>Lista de Pessoas</h1>
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Deletar</th>
+            <th>Editar</th>
+        </tr>
+        <%for(Pessoa of pessoas){%>
+        <tr>
+            <td><%=Pessoa.nome%></td>
+            <td><%=Pessoa.email%></td>
+            <td>
+                <a href="/api/deletar/<%=Pessoa.email%>">Deletar</a>
+            </td>
+            <td>
+                <a href="/api/editar/">Editar</a>
+            </td>
+        </tr>
+        <% } %>
+    </table>
+</body>
+</html>
