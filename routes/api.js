@@ -3,17 +3,17 @@ require('dotenv').config();
 const express = require ('express');
 const router = express.Router();
 
-const pessoaController = require("../controllers/PessoaController");
-const Pessoa = require('../models/pessoa');
+const tarefaController = require("../controllers/TarefaController");
+const Tarefa = require('../models/tarefa');
 
-router.get('/pessoas', pessoaController.getPessoas);
+router.get('/tarefas', tarefaController.getTarefas);
 
-router.get('/buscar/:email', pessoaController.buscarPessoa);
+router.get('/buscar/:nome', tarefaController.buscarTarefa);
 
-router.post('/addpessoas', pessoaController.addPessoa);
+router.post('/addtarefas', tarefaController.addTarefa);
 
-router.delete('/deletar/:email', pessoaController.deletarPessoa);
+router.delete('/deletar/:nome', tarefaController.deletarTarefa);
 
-router.post('/editar', pessoaController.atualizarPessoa);
+router.post('/editar', tarefaController.atualizarTarefa);
 
 module.exports = router;

@@ -18,20 +18,20 @@
     </style>
 </head>
 <body>
-    <h1>Lista de Pessoas</h1>
+    <h1>Lista de ANotações</h1>
     <table>
         <tr>
             <th>Nome</th>
-            <th>Email</th>
+            <th>Conteudo</th>
             <th>Deletar</th>
             <th>Editar</th>
         </tr>
-        <%for(Pessoa of pessoas){%>
+        <%for(Tarefa of tarefas){%>
         <tr>
-            <td><%=Pessoa.nome%></td>
-            <td><%=Pessoa.email%></td>
+            <td><%=Tarefa.nome%></td>
+            <td><%=Tarefa.conteudo%></td>
             <td>
-                <a href="/api/deletar/<%=Pessoa.email%>">Deletar</a>
+                <a href="/api/deletar/<%=Tarefa.nome%>">Deletar</a>
             </td>
             <td>
                 <a href="/api/editar/">Editar</a>

@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const Pessoa = require('./models/pessoa');
+const Tarefa = require('./models/tarefa');
 const app = express();
 app.use(express.json());
 app.set('view engine', 'ejs');
@@ -15,41 +15,41 @@ app.use('/api', router);
 
 
 app.get('/', function (req, res){
-    Pessoa.find().sort({nome: "descending"}).exec(function(err, pessoas){
+    Tarefa.find().sort({nome: "descending"}).exec(function(err, tarefas){
         if (err){
             return next(err);
         };
-        res.render("../views/home", {pessoas: pessoas});
+        res.render("../views/home", {tarefas: tarefas});
     });
 });
 
-app.get('/api/addpessoas', function (req, res){
-    res.render("../views/addPessoa");
+app.get('/api/addtarefas', function (req, res){
+    res.render("../views/addTarefas");
 });
 
-app.post('/api/addpessoas', function (req, res, next){
+app.post('/api/addtarefas', function (req, res, next){
     const nome = req.body.nome;
-    const email = req.body.email;
+    const conteudo = req.body.conteudo;
 
-    Pessoa.findOne({nome: nome }, function (err, pessoa){
+    Tarefa.findOne({nome: nome }, function (err, tarefa){
         if(err) {
             return next(err);
         }
-        if(pessoa) {
-            req.flash("error", "Usuario já existe");
-            return res.redirect('/api/addpessoas');
+        if(tarefa) {
+            req.flash("error", "Tarefa já existe");
+            return res.redirect('/api/addtarefas');
         }
 
-        const newPessoa = new Pessoa({
+        const newTarefa = new Tarefa({
             nome: nome,
-            email: email,
+            conteudo: conteudo,
         });
-        newPessoa.save(next);
+        newTarefa.save(next);
     });
 });
 
-app.get('/api/deletar/:email', function(req, res){
-   Pessoa.findOneAndDelete(req.params.email, function(err){
+app.get('/api/deletar/:nome', function(req, res){
+   Tarefa.findOneAndDelete(req.params.nome, function(err){
     if(err){
         console.log("err");
     }else{
@@ -64,21 +64,21 @@ app.get('/api/editar', function(req, res,){
 
 app.post('/api/editar', function(req, res, next){
     const nome = req.body.nome
-    const email = req.body.email
-    Pessoa.updateOne({email: request.body.email}, {$set:{nome: request.body.nome}}, function(err, pessoa){
+    const conteudo = req.body.conteudo
+    Tarefa.updateOne({nome: request.body.nome}, {$set:{conteudo: request.body.conteudo}}, function(err, tarefa){
         if(err) {
             return next(err);
         }
-        if(pessoa) {
-            req.flash("error", "Usuario já existe");
+        if(tarefa) {
+            req.flash("error", "Tarefa já existe");
             return res.redirect('/');
         }
 
-        const newPessoa = new Pessoa({
+        const newTarefa = new Tarefa({
             nome: nome,
-            email: email,
+            conteudo: conteudo,
         });
-        newPessoa.save(next);
+        newTarefa.save(next);
     });
     res.redirect("/");
 
