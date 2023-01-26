@@ -4,40 +4,40 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <title>Página Inicial</title>
-    <style>
-        table, td, th{
-            border: 1px solid blue;
-        };
-        th {
-            font-weight: bolder;
-        };
-        td, th{
-            padding: 8px;
-        };
-    </style>
 </head>
 <body>
-    <h1>Lista de ANotações</h1>
-    <table>
-        <tr>
-            <th>Nome</th>
-            <th>Conteudo</th>
-            <th>Deletar</th>
-            <th>Editar</th>
-        </tr>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark">
+    <a class="navbar-brand mx-7" href="#">API - Anotações</a>
+    <a class="navbar-brand mx-4" href="/api/addtarefas">Adicionar Uma Anotação</a> 
+
+    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+        </ul>
+    </div>
+</nav>
+  <div class="container-fluid">
+    <h2>Lista de Anotações</h2>
+    <table class="table table-bordered border-primary">
+        <thead>
+          <tr>
+            <th scope="col">Título</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Botões</th>
+          </tr>
         <%for(Tarefa of tarefas){%>
         <tr>
             <td><%=Tarefa.nome%></td>
             <td><%=Tarefa.conteudo%></td>
             <td>
-                <a href="/api/deletar/<%=Tarefa.nome%>">Deletar</a>
-            </td>
-            <td>
-                <a href="/api/editar/">Editar</a>
+              <a class="btn btn-primary" href="/api/deletar/<%=Tarefa.nome%>" role="button">Deletar</a>
+              <a class="btn btn-primary" href="/api/editar/" role="button">Editar</a>
             </td>
         </tr>
         <% } %>
     </table>
+  </div>
 </body>
 </html>

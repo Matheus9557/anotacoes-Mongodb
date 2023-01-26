@@ -11,7 +11,7 @@ const buscarTarefa = async (request, response) =>{
 
 
 const getTarefas = async (request, response)=>{
-    const tarefas = await Tarefa.find({},{_id:false, nome:true, descrição:true});
+    const tarefas = await Tarefa.find({},{_id:false, nome:true, conteudo:true});
     response.status(200).send(tarefas);
 };
 
@@ -36,7 +36,7 @@ const deletarTarefa = async (request, response)=>{
 };
 
 const atualizarTarefa = async(request, response)=>{
-    const result = await Tarefa.updateOne({nome: request.body.nome}, {$set:{descrição: request.body.descrição}});
+    const result = await Tarefa.updateOne({nome: request.body.nome},{$set:{conteudo: request.body.conteudo}});
 
     if(result.modifiedCount > 0){
         response.status(200).send('Atualizado com sucesso!');

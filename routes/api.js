@@ -6,7 +6,7 @@ const router = express.Router();
 const tarefaController = require("../controllers/TarefaController");
 const Tarefa = require('../models/tarefa');
 
-router.get('/tarefas', tarefaController.getTarefas);
+router.get('/', tarefaController.getTarefas);
 
 router.get('/buscar/:nome', tarefaController.buscarTarefa);
 

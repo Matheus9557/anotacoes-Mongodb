@@ -1,25 +1,28 @@
 require('dotenv').config();
 const express = require('express');
 const Tarefa = require('./models/tarefa');
+const router = require('./routes/api');
 const app = express();
+var bodyParser = require('body-parser');
+var path = require('path');
+
 app.use(express.json());
 app.set('view engine', 'ejs');
-var bodyParser = require('body-parser');
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
+app.use(express.static(path.join(__dirname, 'views')));
 
 
-const router = require('./routes/api');
+
 app.use('/api', router);
 
 
 app.get('/', function (req, res){
-    Tarefa.find().sort({nome: "descending"}).exec(function(err, tarefas){
-        if (err){
+    Tarefa.find().exec((err, tarefas) => {
+        if (err) {
             return next(err);
         };
-        res.render("../views/home", {tarefas: tarefas});
+        res.render("../views/home", { tarefas: tarefas });
     });
 });
 
@@ -65,7 +68,7 @@ app.get('/api/editar', function(req, res,){
 app.post('/api/editar', function(req, res, next){
     const nome = req.body.nome
     const conteudo = req.body.conteudo
-    Tarefa.updateOne({nome: request.body.nome}, {$set:{conteudo: request.body.conteudo}}, function(err, tarefa){
+    Tarefa.updateOne({nome: req.body.nome}, {$set:{conteudo: req.body.conteudo}}, function(err, tarefa){
         if(err) {
             return next(err);
         }
@@ -88,4 +91,3 @@ app.post('/api/editar', function(req, res, next){
 app.listen(process.env.API_PORT, ()=>{
     console.log(`API rodando na porta ${process.env.API_PORT}`);
 });
-
