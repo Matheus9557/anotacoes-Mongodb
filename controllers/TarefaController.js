@@ -44,11 +44,11 @@ const atualizarTarefa = async(request, response)=>{
 }
 
 const buscarTarefaPeso = async (request, response) => {
-    const result = await Tarefa.find({nome: request.body.nome}, {weights: { $gt: 1 } })
+    const result = await Tarefa.find({ $text: { $search:request.body.nome } }, { score: { $meta: 'textScore'} })
     if(result.length > 0){
         response.status(200).send(result);
     }else{response.status(400).send('')};
 }
-
+//db.posts.find({ $text: { $search: 'nodejs' } }, { score: { $meta: 'textScore'} })
 
 module.exports = {getTarefas, addTarefa, deletarTarefa, atualizarTarefa, buscarTarefa, buscarTarefaPeso};

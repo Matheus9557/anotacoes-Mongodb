@@ -7,8 +7,8 @@ const tarefaSchema = new mongoose.Schema({
 },
 { 
     weights: {
-    nome : 1,
-    conteudo: 2
+    nome : 10,
+    conteudo: 20
   }
 }
  );

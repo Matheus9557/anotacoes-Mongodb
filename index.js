@@ -5,6 +5,7 @@ const router = require('./routes/api');
 const app = express();
 var bodyParser = require('body-parser');
 var path = require('path');
+const { render } = require('ejs');
 
 
 
@@ -90,13 +91,14 @@ app.post('/api/editar', function(req, res, next){
 })
 
 app.get('/api/pesquisar', function (req,res)   {
-    res.render("../views/pesquisar")
-    
-    
+    const nome = req.body.nome
+     Tarefa.find({ $text: { $search: nome } }, { score: { $meta: 'textScore'}})
+    res.render("../views/pesquisar");
 })
-
-
+       
     
  app.listen(process.env.API_PORT, ()=>{
     console.log(`API rodando na porta ${process.env.API_PORT}`);
 });
+
+
