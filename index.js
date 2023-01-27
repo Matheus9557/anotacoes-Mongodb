@@ -89,7 +89,14 @@ app.post('/api/editar', function(req, res, next){
 
 })
 
+app.get('/api/pesquisar', function (req,res)   {
+    res.render("../views/pesquisar")
+    
+    
+})
 
-app.listen(process.env.API_PORT, ()=>{
+
+    
+ app.listen(process.env.API_PORT, ()=>{
     console.log(`API rodando na porta ${process.env.API_PORT}`);
 });

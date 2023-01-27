@@ -8,8 +8,6 @@ const buscarTarefa = async (request, response) =>{
     }else{response.status(400).send('Tarefa não encontrada')};
 };
     
-
-
 const getTarefas = async (request, response)=>{
     const tarefas = await Tarefa.find({},{_id:false, nome:true, conteudo:true});
     response.status(200).send(tarefas);
@@ -45,5 +43,12 @@ const atualizarTarefa = async(request, response)=>{
     }
 }
 
+const buscarTarefaPeso = async (request, response) => {
+    const result = await Tarefa.find({nome: request.body.nome}, {weights: { $gt: 1 } })
+    if(result.length > 0){
+        response.status(200).send(result);
+    }else{response.status(400).send('')};
+}
 
-module.exports = {getTarefas, addTarefa, deletarTarefa, atualizarTarefa, buscarTarefa};
+
+module.exports = {getTarefas, addTarefa, deletarTarefa, atualizarTarefa, buscarTarefa, buscarTarefaPeso};
