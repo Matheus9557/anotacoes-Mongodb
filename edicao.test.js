@@ -3,11 +3,11 @@ const Tarefa = require('./models/tarefa');
 describe('Teste de edição de descrição', () => {
   let tarefa;
 
-  beforeEach(() => { tarefa = new Tarefa({ nome: 'Comprar leite', descricao: 'Comprar leite na loja' });
+  beforeEach(() => { tarefa = new Tarefa({ nome: 'Estudar ', descricao: 'Estudar bd ' });
   });
 
   it('Deve editar a descrição corretamente',() => {
-    tarefa.descricao = 'Comprar leite no supermercado';
-    expect(tarefa.descricao).toEqual('Comprar leite no supermercado');
+    tarefa.descricao = 'Estudar testes';
+    expect(tarefa.descricao).toEqual('Estudar testes');
   });
 });
