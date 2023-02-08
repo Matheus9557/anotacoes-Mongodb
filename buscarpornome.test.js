@@ -2,10 +2,10 @@ const Tarefa = require('./models/tarefa');
 
 describe('Teste de busca por título para edição', () => {
   it('Deve retornar tarefas encontradas com o título fornecido', async () => {
-    const tarefaMock = { nome: 'Tarefa 1' };
+    const tarefaMock = { nome: 'Estudar' };
     jest.spyOn(Tarefa, 'find').mockResolvedValue([tarefaMock]);
 
-    const requestMock = { params: { nome: 'Tarefa 1' } };
+    const requestMock = { params: { nome: 'Estudar' } };
     const responseMock = {
       status: jest.fn().mockReturnValue({ send: jest.fn() }),
     };
@@ -13,7 +13,7 @@ describe('Teste de busca por título para edição', () => {
     const buscarTarefa = require('./controllers/TarefaController');
     await buscarTarefa.buscarTarefa(requestMock, responseMock);
 
-    expect(Tarefa.find).toHaveBeenCalledWith({ nome: 'Tarefa 1' }, { __v: false });
+    expect(Tarefa.find).toHaveBeenCalledWith({ nome: 'Estudar' }, { __v: false });
     expect(responseMock.status).toHaveBeenCalledWith(200);
     expect(responseMock.status().send).toHaveBeenCalledWith([tarefaMock]);
   });
@@ -21,7 +21,7 @@ describe('Teste de busca por título para edição', () => {
   it('Deve retornar erro ao não encontrar tarefas com o título fornecido', async () => {
     jest.spyOn(Tarefa, 'find').mockResolvedValue([]);
 
-    const requestMock = { params: { nome: 'Tarefa 2' } };
+    const requestMock = { params: { nome: 'Treinar' } };
     const responseMock = {
       status: jest.fn().mockReturnValue({ send: jest.fn() }),
     };
@@ -29,7 +29,7 @@ describe('Teste de busca por título para edição', () => {
     const buscarTarefa = require('./controllers/TarefaController');
     await buscarTarefa.buscarTarefa(requestMock,responseMock);
 
-    expect(Tarefa.find).toHaveBeenCalledWith({ nome: 'Tarefa 2' }, { __v: false });
+    expect(Tarefa.find).toHaveBeenCalledWith({ nome: 'Treinar' }, { __v: false });
     expect(responseMock.status).toHaveBeenCalledWith(400);
     expect(responseMock.status().send).toHaveBeenCalledWith('Tarefa não encontrada');
   });
