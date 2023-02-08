@@ -27,7 +27,7 @@ describe('Teste de busca por título para edição', () => {
     };
 
     const buscarTarefa = require('./controllers/TarefaController');
-    await buscarTarefa.buscarTarefa(requestMock, responseMock);
+    await buscarTarefa.buscarTarefa(requestMock,responseMock);
 
     expect(Tarefa.find).toHaveBeenCalledWith({ nome: 'Tarefa 2' }, { __v: false });
     expect(responseMock.status).toHaveBeenCalledWith(400);
