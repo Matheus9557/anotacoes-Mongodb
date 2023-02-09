@@ -1,4 +1,4 @@
-const Tarefa = require('./models/tarefa')
+const Tarefa = require('../models/tarefa')
 
 describe('Teste de cadastro de tarefa com numeros e letras ', () => {
   it('Deve cadastrar uma nova tarefa com nome e conteúdo', () => {

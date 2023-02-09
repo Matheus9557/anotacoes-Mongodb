@@ -1,4 +1,4 @@
-const Tarefa = require('./models/tarefa');
+const Tarefa = require('../models/tarefa');
 
 describe('Teste de edição de descrição', () => {
   let tarefa;

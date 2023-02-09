@@ -1,4 +1,4 @@
-const Tarefa = require('./models/tarefa');
+const Tarefa = require('../models/tarefa');
 
 describe('Teste de busca por título para edição', () => {
   it('Deve retornar tarefas encontradas com o título fornecido', async () => {
@@ -10,7 +10,7 @@ describe('Teste de busca por título para edição', () => {
       status: jest.fn().mockReturnValue({ send: jest.fn() }),
     };
 
-    const buscarTarefa = require('./controllers/TarefaController');
+    const buscarTarefa = require('../controllers/TarefaController');
     await buscarTarefa.buscarTarefa(requestMock, responseMock);
 
     expect(Tarefa.find).toHaveBeenCalledWith({ nome: 'Estudar' }, { __v: false });
@@ -26,7 +26,7 @@ describe('Teste de busca por título para edição', () => {
       status: jest.fn().mockReturnValue({ send: jest.fn() }),
     };
 
-    const buscarTarefa = require('./controllers/TarefaController');
+    const buscarTarefa = require('../controllers/TarefaController');
     await buscarTarefa.buscarTarefa(requestMock,responseMock);
 
     expect(Tarefa.find).toHaveBeenCalledWith({ nome: 'Treinar' }, { __v: false });
