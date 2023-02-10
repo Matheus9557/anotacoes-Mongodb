@@ -1,5 +1,4 @@
 const Tarefa = require('../models/tarefa');
-jest.setTimeout(60000);
 
 describe('Salvar duas tarefas de uma vez', () => {
   it('Deve salvar duas tarefas', async () => {
@@ -8,9 +7,18 @@ describe('Salvar duas tarefas de uma vez', () => {
 
     const tarefas = [tarefa1, tarefa2];
 
+   
+    Tarefa.insertMany = jest.fn().mockResolvedValue(tarefas);
+
     await Tarefa.insertMany(tarefas);
+
+    expect(Tarefa.insertMany).toHaveBeenCalledWith(tarefas);
+
+    
+    Tarefa.find = jest.fn().mockResolvedValue(tarefas);
 
     const tarefasSalvas = await Tarefa.find({});
     expect(tarefasSalvas).toHaveLength(2);
+    expect(tarefasSalvas).toEqual(tarefas);
   });
 });
