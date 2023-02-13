@@ -1,7 +1,7 @@
 const deletarTarefa = require('../controllers/TarefaController').deletarTarefa;
 describe("Teste de remoção de tarefa", () => {
   it("Deve remover uma tarefa existente", () => {
-  const tarefasAntigas = [{ nome: "Fazer compra" }];
+  const tarefasAntigas = [{ nome: "Fazer compra " }];
   expect(tarefasAntigas).toHaveLength(1);
   
 
