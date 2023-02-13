@@ -2,16 +2,15 @@ const Tarefa = require('../models/tarefa');
 jest.setTimeout(50000);
 
 describe('Tarefa', () => {
-  it('should not be able to create a task without a name', async () => {
-    // Cria o mock da função de salvar no banco de dados
-    Tarefa.prototype.save = jest.fn().mockRejectedValue(new Error('tarefa validation failed: nome: Path `nome` is required.'));
+  it('não deve ser capaz de criar uma tarefa sem um nome', async () => {
+    Tarefa.prototype.save = jest.fn().mockRejectedValue(new Error('falha na validação da tarefa: nome: O caminho `nome` é obrigatório.'));
 
-    const tarefa = new Tarefa({ conteudo: 'Example content' });
+    const tarefa = new Tarefa({ conteudo: 'Esudar' });
 
     try {
       await tarefa.save();
     } catch (err) {
-      expect(err.message).toMatch(/tarefa validation failed: nome: Path `nome` is required./);
+      expect(err.message).toMatch(/falha na validação da tarefa: nome o `nome` é obrigatório./);
     }
   });
 });

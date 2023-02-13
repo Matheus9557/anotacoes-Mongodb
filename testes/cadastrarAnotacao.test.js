@@ -3,7 +3,7 @@ const addTarefa = require('../controllers/TarefaController').addTarefa;
 
 describe('Teste de adição de tarefa', () => {
     it('Deve adicionar uma tarefa com nome e conteúdo', async () => {
-      const tarefa = { nome: 'Fazer compras', conteudo: 'Comprar leite e pão' };
+      const tarefa = { nome: 'Compras', conteudo: 'Compras de carne' };
       
       const result = await addTarefa(tarefa);
       
