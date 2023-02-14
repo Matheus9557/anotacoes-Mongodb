@@ -1,19 +1,20 @@
 require('dotenv').config();
 const express = require('express');
 const Tarefa = require('./models/tarefa');
+const Pessoa = require('./models/pessoa');
 const router = require('./routes/api');
+const session = require('express-session');
 const app = express();
+const cors = require('cors');
 var bodyParser = require('body-parser');
 var path = require('path');
-const { render } = require('ejs');
-
-
 
 app.use(express.json());
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(express.static(path.join(__dirname, 'views')));
+app.use(cors());
 
 
 
@@ -31,6 +32,47 @@ app.get('/', function (req, res){
 
 app.get('/api/addtarefas', function (req, res){
     res.render("../views/addTarefas");
+});
+
+app.get('/api/addpessoa', function (res, res){
+    res.render("../views/addPessoa");
+});
+
+app.post('/api/addpessoa', function(req, res, next){
+    const nome = req.body.nome;
+    const email = req.body.email;
+    const password = req.body.password;
+
+    Pessoa.findOne({ email: email }, function(err, pessoa){
+        if(err){
+            return next(err);
+        }
+        if(pessoa){
+            req.flash("error", "Pessoa já cadastrada");
+            return res.redirect('/api/addpessoa');
+        }
+
+        const newPessoa = new Pessoa({
+            nome: nome,
+            email: email,
+            password: password,
+        });
+        newPessoa.save(next);
+    });
+});
+
+app.get('/api/login', function(req, res){
+    res.render("../views/login");
+});
+
+app.post('/api/login', function(req, res){
+    const session = req.session;
+    const { email, password } = req.body;
+
+    session.email = email;
+    session.password = password;
+
+    res.end("sucess");
 });
 
 app.post('/api/addtarefas', function (req, res, next){
@@ -52,6 +94,15 @@ app.post('/api/addtarefas', function (req, res, next){
         });
         newTarefa.save(next);
     });
+});
+
+app.post(/api/postar, function(req, res){
+
+    const Pessoa  = req.body.email;
+    const Tarefa  = req.body.nome;
+
+    (`MATCH (p1:Pessoa{email:"${request.body.email1}"}) OPTIONAL MATCH (p2:Tarefa{nome:"${request.body.nome}"}) CREATE (p1)-[:CRIOU]->(p2)`);
+
 });
 
 app.get('/api/deletar/:nome', function(req, res){
@@ -88,17 +139,7 @@ app.post('/api/editar', function(req, res, next){
     });
     res.redirect("/");
 
-})
-
-app.get('/api/pesquisar', function (req,res)   {
-    const nome = req.body.nome
-     Tarefa.find({ $text: { $search: nome } }, { score: { $meta: 'textScore'}})
-    res.render("../views/pesquisar");
-})
-       
-    
- app.listen(process.env.API_PORT, ()=>{
-    console.log(`API rodando na porta ${process.env.API_PORT}`);
 });
-
-
+app.listen(process.env.API_PORT, ()=>{
+  console.log(`API rodando na porta ${process.env.API_PORT}`);
+});
