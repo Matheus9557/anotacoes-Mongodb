@@ -1,4 +1,4 @@
-const Pessoa = require('../../models/pessoa');
+const Pessoa = require('../models/pessoa');
 
 const loginController = {
     async createSession(req, res) {

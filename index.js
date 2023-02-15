@@ -5,7 +5,7 @@ const Pessoa = require('./models/pessoa');
 const router = require('./routes/api');
 const session = require('express-session');
 const app = express();
-const neo4j = require('../database/neo4j');
+const neo4j = require('./database/neo4j');
 const cors = require('cors');
 var bodyParser = require('body-parser');
 var path = require('path');
@@ -66,6 +66,7 @@ app.get('/api/login', function(req, res){
     res.render("../views/login");
 });
 
+  
 app.post('/api/login', function(req, res){
     const session = req.session;
     const { email, password } = req.body;
@@ -97,7 +98,7 @@ app.post('/api/addtarefas', function (req, res, next){
     });
 });
 
-app.post('/api/postar', function(req, res){
+app.post('/api/postar', async function(req, res){
     const session = neo4j.session();
     const result = await session.run(`MATCH (p1:Pessoa{email:"${request.body.email1}"}) OPTIONAL MATCH (p2:Tarefa{nome:"${request.body.nome}"}) CREATE (p1)-[:CRIOU]->(p2)`);
     if(result.summary.counters._stats.relationshipsCreated > 0){
@@ -107,6 +108,7 @@ app.post('/api/postar', function(req, res){
     };
     await session.close();
 });
+
 
 app.get('/api/deletar/:nome', function(req, res){
    Tarefa.findOneAndDelete(req.params.nome, function(err){

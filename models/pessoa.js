@@ -1,5 +1,5 @@
 const mongoose = require('../database/db');
-const bcrypt = require("bcrypt-nodejs");
+const bcrypt = require("bcrypt");
 
 const SALT_FACTOR = 10;
 

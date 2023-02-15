@@ -1,5 +1,5 @@
 const { response } = require('express');
-const { find } = require('../../models/pessoa');
+const { find } = require('../models/pessoa');
 const Tarefa = require('../models/tarefa');
 const Pessoa = require('../models/pessoa');
 const neo4j = require('../database/neo4j');
@@ -25,6 +25,8 @@ const addPessoa = async (request, response) =>{
         response.status(400).send('Falha ao salvar');
     });
 };
+
+
 
 const getPessoas = async (request, response)=>{
     const pessoas = await Pessoa.find({},{_id: false, nome:true, email:true});
@@ -93,4 +95,4 @@ const atualizarTarefa = async(request, response)=>{
 }
 
 
-module.exports = {getTarefas, addTarefa, deletarTarefa, atualizarTarefa, buscarTarefa, addPessoa, addPostagem, getPostagens, getPessoas, deletarPessoa};
+module.exports = {getTarefas, addTarefa, deletarTarefa, atualizarTarefa, buscarTarefa, addPessoa, addPostagem, getPostagens, getPessoas};
