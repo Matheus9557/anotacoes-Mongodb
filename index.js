@@ -5,6 +5,7 @@ const Pessoa = require('./models/pessoa');
 const router = require('./routes/api');
 const session = require('express-session');
 const app = express();
+const neo4j = require('../database/neo4j');
 const cors = require('cors');
 var bodyParser = require('body-parser');
 var path = require('path');
@@ -96,13 +97,15 @@ app.post('/api/addtarefas', function (req, res, next){
     });
 });
 
-app.post(/api/postar, function(req, res){
-
-    const Pessoa  = req.body.email;
-    const Tarefa  = req.body.nome;
-
-    (`MATCH (p1:Pessoa{email:"${request.body.email1}"}) OPTIONAL MATCH (p2:Tarefa{nome:"${request.body.nome}"}) CREATE (p1)-[:CRIOU]->(p2)`);
-
+app.post('/api/postar', function(req, res){
+    const session = neo4j.session();
+    const result = await session.run(`MATCH (p1:Pessoa{email:"${request.body.email1}"}) OPTIONAL MATCH (p2:Tarefa{nome:"${request.body.nome}"}) CREATE (p1)-[:CRIOU]->(p2)`);
+    if(result.summary.counters._stats.relationshipsCreated > 0){
+        response.status(200).send('Relacionamento criado');
+    }else{
+        response.status(400).send('Relacionamento não criado');
+    };
+    await session.close();
 });
 
 app.get('/api/deletar/:nome', function(req, res){
