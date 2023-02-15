@@ -11,8 +11,8 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark">
     <a class="navbar-brand mx-7" href="#">API - Anotações</a>
-    <a class="navbar-brand mx-4" href="/api/addtarefas">Adicionar Uma Anotação</a> 
-    <a class="navbar-brand mx-4" href="/api/pesquisar">Pesquisar Tarefa </a>
+    <a class="navbar-brand mx-4" href="/api/addtarefas">Adicionar Uma Anotação</a>
+    <a class="navbar-brand mx-4" href="/api/addpessoa">Cadastrar uma Pessoa</a>
 
     <div class="collapse navbar-collapse " id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
@@ -35,6 +35,7 @@
             <td>
               <a class="btn btn-primary" href="/api/deletar/<%=Tarefa.nome%>" role="button">Deletar</a>
               <a class="btn btn-primary" href="/api/editar/" role="button">Editar</a>
+              <a class="btn btn-primary" href="/api/postar" role="button">Postar</a>
             </td>
         </tr>
         <% } %>
